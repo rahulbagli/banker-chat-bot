@@ -2,7 +2,8 @@ import React from 'react'
 import { Paper, Table, TableBody, TableCell, TableContainer, TableHead, TableRow } from '@mui/material';
 
 function TableDisplay({ products }) {
-    const productData = Object.keys(products.productsList[0].planTypeList[0].planUseList[0].data)
+ 
+    const productData = Object.keys(products?.productsList[0]?.planTypeList[0]?.planUseList[0]?.data)
     return (
         <>
             <TableContainer component={Paper}>
@@ -10,7 +11,7 @@ function TableDisplay({ products }) {
                     <TableHead sx={{ bgcolor: '#183a61b3' }}>
                         <TableRow>
                             {
-                                productData.map((param, index) => (
+                                productData?.map((param, index) => (
                                     <TableCell sx={{ color: 'white' }}>{param}</TableCell>
                                 ))}
                         </TableRow>
@@ -18,7 +19,7 @@ function TableDisplay({ products }) {
                     <TableBody>
 
                         {
-                            products.productsList[0].planTypeList[0].planUseList.map((param, index) => (
+                            products?.productsList[0]?.planTypeList[0]?.planUseList?.map((param, index) => (
                                 <>
                                     <TableRow>
                                         <TableCell sx={{ textAlign: 'left', color: 'blue', fontSize: '12px' }}>{param.planUse}</TableCell>

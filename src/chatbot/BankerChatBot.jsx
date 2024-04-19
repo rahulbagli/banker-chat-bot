@@ -63,9 +63,9 @@ function BankerChatBot() {
       if(response.responseCode == 200 && response.queryIntent == 'Compare_Product'){
         showResponse(compareTable(response.productList), 'response');
       } else  if(response.responseCode == 206 && response.queryIntent == 'Compare_Product'){
-        showResponse(displayTable(response.productList), 'response');
+        showResponse(displayTable(response?.productList), 'response');
       } else  if(response.responseCode == 206 && response.queryIntent == 'Product_Detail'){
-        showResponse(displayTable(response.productList), 'response');
+        showResponse(displayTable(response?.productList), 'response');
       }else  if(response.responseCode == 200 && response.queryIntent == 'Display_Plans'){
         showResponse(displayPlans(response), 'response');
       }else  if(response.responseCode == 200 && response.queryIntent == 'Display_Products'){
