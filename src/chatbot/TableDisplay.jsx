@@ -1,7 +1,7 @@
 import React from 'react'
 import { Paper, Table, TableBody, TableCell, TableContainer, TableHead, TableRow } from '@mui/material';
 
-function TableDisplay({ products }) {
+function TableDisplay({ products, camelCaseToWords }) {
  
     const productData = Object.keys(products?.productsList[0]?.planTypeList[0]?.planUseList[0]?.data)
     return (
@@ -12,7 +12,7 @@ function TableDisplay({ products }) {
                         <TableRow>
                             {
                                 productData?.map((param, index) => (
-                                    <TableCell sx={{ color: 'white' }}>{param}</TableCell>
+                                    <TableCell sx={{ color: 'white' }}>{camelCaseToWords(param)}</TableCell>
                                 ))}
                         </TableRow>
                     </TableHead>
@@ -22,7 +22,9 @@ function TableDisplay({ products }) {
                             products?.productsList[0]?.planTypeList[0]?.planUseList?.map((param, index) => (
                                 <>
                                     <TableRow>
-                                        <TableCell sx={{ textAlign: 'left', color: 'blue', fontSize: '12px' }}>{param.planUse}</TableCell>
+                                        <TableCell sx={{ textAlign: 'left', color: 'blue', fontSize: '12px', fontWeight:600 }}>
+                                            {param.planUse}
+                                            </TableCell>
                                     </TableRow>
                                     <TableRow>
                                         <TableCell>{param.data.planProduct}</TableCell>

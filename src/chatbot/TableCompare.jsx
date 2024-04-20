@@ -1,7 +1,7 @@
 import React from 'react'
 import { Paper, Table, TableBody, TableCell, TableContainer, TableHead, TableRow } from '@mui/material';
 
-function TableCompare({ products }) {
+function TableCompare({ products, camelCaseToWords }) {
     const productData = Object.keys(products.productsList[0].planTypeList[0].planUseList[0].data)
     return (
         <>
@@ -20,9 +20,9 @@ function TableCompare({ products }) {
                             return row.planTypeList[0].planUseList[index]?.planUse && (
                                 <>
                                     <TableRow key={index} sx={{ backgroundColor: 'e3e3e3' }}>
-                                        <TableCell key={index} sx={{ textAlign: 'left', color: 'blue', fontSize: '12px' }}>
+                                        <TableCell key={index} sx={{ textAlign: 'left', color: 'blue', fontSize: '12px', fontWeight:600}}>
                                             {row.planTypeList[0].planType} -</TableCell>
-                                            <TableCell key={index} sx={{ textAlign: 'left', color: 'blue', fontSize: '12px' }}>
+                                            <TableCell key={index} sx={{ textAlign: 'left', color: 'blue', fontSize: '12px', fontWeight:600 }}>
                                             {row.planTypeList[0].planUseList[index].planUse}</TableCell>
                                     </TableRow>
                                     {
@@ -31,7 +31,9 @@ function TableCompare({ products }) {
                                                 row.planTypeList[0].planUseList[index].data[colProperty]);
                                             return (
                                                 <TableRow>
-                                                    <TableCell key={index} sx={{ color: '#130db5', bgcolor: 'rgb(169 192 223 /82% )'}}>{colProperty}</TableCell>
+                                                    <TableCell key={index} sx={{ color: '#130db5', bgcolor: 'rgb(169 192 223 /82% )'}}>
+                                                        {camelCaseToWords(colProperty)}
+                                                        </TableCell>
                                                     {colVals.map((colVal, index) => {
                                                         const isDiff = colVals.indexOf(colVal) !==  colVals.lastIndexOf(colVal);
                                                         const color = isDiff ? 'inherit' : 'red' 

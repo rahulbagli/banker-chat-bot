@@ -23,6 +23,11 @@ async function postCall(input) {
   }
 }
 
+function camelCaseToWords(text) {
+  const result = text.replace(/([A-Z])/g, ' $1');
+  return result.charAt(0).toUpperCase() + result.slice(1);
+}
+
 function BankerChatBot() {
   const [input, setInput] = useState('');
   const [messages, setMessages] = useState([]);
@@ -50,6 +55,7 @@ function BankerChatBot() {
     showResponse(input, 'user');
     await new Promise((resolve) => setTimeout(resolve, 1500));
     backendCall();
+   
   };
 
   async function backendCall() {
@@ -57,7 +63,6 @@ function BankerChatBot() {
       const response = await postCall(input.trim());
       setResponse(response);
       setError(null);
-      console.log('API response:', response);
       showResponse(response.responseText, 'response');
       await new Promise((resolve) => setTimeout(resolve, 2700));
       if(response.responseCode == 200 && response.queryIntent == 'Compare_Product'){
@@ -72,9 +77,9 @@ function BankerChatBot() {
         showResponse(displayProducts(response), 'response');
       }else  if(response.responseCode == 200 && response.queryIntent == 'Display_PlanType'){
         showResponse(displayPlanTypes(response), 'response');
-      }else {
+      } else {
       }
-      
+      setInput('');
     } catch (error) {
       console.error('Error sending request:', error);
       setError(error.message || 'An error occurred.'); 
@@ -83,13 +88,13 @@ function BankerChatBot() {
 
   const compareTable = (products) => {
     return (
-      <TableCompare products={products}/>
+      <TableCompare products={products} camelCaseToWords = {camelCaseToWords}/>
     );
   };
 
   const displayTable = (products) => {
     return (
-      <TableDisplay products={products}/>
+      <TableDisplay products={products} camelCaseToWords = {camelCaseToWords}/>
     );
   };
 
