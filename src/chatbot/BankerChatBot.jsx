@@ -1,5 +1,5 @@
 import React, { useState, useRef, useEffect } from 'react';
-import { Box, Container, Grid, Paper, TextField, Button, Table, TableBody, TableCell, TableContainer, TableHead, TableRow } from '@mui/material';
+import { Box, Container, Grid, Paper, TextField, Button } from '@mui/material';
 import SendIcon from '@mui/icons-material/Send';
 import './bankerChat.scss'
 import axios from 'axios';
@@ -9,6 +9,7 @@ import TableDisplay from './TableDisplay';
 import DisplayPlan from './DisplayPlan';
 import DisplayPlanType from './DisplayPlanType';
 import DisplayProduct from './DisplayProduct';
+import LoadingProcess from './LoadingProcess';
 
 async function postCall(input) {
   try {
@@ -34,6 +35,7 @@ function BankerChatBot() {
   const [response, setResponse] = useState(null);
   const [error, setError] = useState(null);
   const messagesEndRef = useRef(null);
+  
 
   const scrollToBottom = () => {
     messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' });
@@ -47,12 +49,17 @@ function BankerChatBot() {
     setMessages((prevMessages) => [...prevMessages, { text: inputTxt, type: userType }]);
   }
 
+  const deletePreviousText = () => {
+    setMessages((prevMessages) => prevMessages.slice(0, -1));
+  };
+
   async function handleInputChange(event) {
     setInput(event.target.value);
   }
 
   async function handleSendClick() {
     showResponse(input, 'user');
+    showResponse(loadingProgress(), 'response');
     await new Promise((resolve) => setTimeout(resolve, 1500));
     backendCall();
    
@@ -61,8 +68,11 @@ function BankerChatBot() {
   async function backendCall() {
     try {
       const response = await postCall(input.trim());
+      await new Promise((resolve) => setTimeout(resolve, 2500));
+      deletePreviousText();
       setResponse(response);
       setError(null);
+      
       showResponse(response.responseText, 'response');
       await new Promise((resolve) => setTimeout(resolve, 2700));
       if(response.responseCode == 200 && response.queryIntent == 'Compare_Product'){
@@ -85,6 +95,12 @@ function BankerChatBot() {
       setError(error.message || 'An error occurred.'); 
     }
   }
+
+  const loadingProgress = () => {
+    return (
+     <LoadingProcess />
+    );
+  };
 
   const compareTable = (products) => {
     return (
