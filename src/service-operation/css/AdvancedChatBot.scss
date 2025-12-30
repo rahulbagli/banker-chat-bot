@@ -1,0 +1,450 @@
+/* AdvancedChatBot.scss - Professional Corporate Style */
+
+#root {
+  width: 100%;
+  height: 100%;
+  margin: 0;
+  padding: 0;
+}
+
+.chat-root {
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  background: #f8f9fa;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu', sans-serif;
+}
+
+/* ============================================
+   HEADER SECTION - MUI AppBar
+   ============================================ */
+.chat-header {
+  background: linear-gradient(to right, #1e3a8a, #1e40af) !important;
+  box-shadow: 0 2px 12px rgba(0, 0, 0, 0.08) !important;
+  position: relative;
+  z-index: 10;
+}
+
+.chat-toolbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 12px 32px !important;
+  min-height: 70px !important;
+  width: 100%;
+}
+
+.chat-brand {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  flex: 1;
+}
+
+.chat-brand .MuiTypography-root {
+  margin: 0;
+  font-size: 22px;
+  font-weight: 600;
+  color: #ffffff;
+  letter-spacing: -0.3px;
+}
+
+.logo {
+  width: 150px;
+  height: 50px;
+  object-fit: contain;
+}
+
+.chat-toolbar .MuiButton-root {
+  padding: 10px 24px;
+  background: rgba(255, 255, 255, 0.15);
+  color: white;
+  border: 1.5px solid rgba(255, 255, 255, 0.3);
+  border-radius: 8px;
+  font-weight: 600;
+  font-size: 14px;
+  text-transform: none;
+  transition: all 0.2s ease;
+  backdrop-filter: blur(10px);
+  flex-shrink: 0;
+  margin-left: auto;
+}
+
+.chat-toolbar .MuiButton-root:hover {
+  background: rgba(255, 255, 255, 0.25);
+  border-color: rgba(255, 255, 255, 0.5);
+  transform: translateY(-1px);
+}
+
+.chat-toolbar .MuiButton-root:active {
+  transform: translateY(0);
+}
+
+/* Legacy header support (if using regular header tag) */
+.chat-root header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 18px 32px;
+  background: linear-gradient(to right, #1e3a8a, #1e40af);
+  box-shadow: 0 2px 12px rgba(0, 0, 0, 0.08);
+  position: relative;
+  z-index: 10;
+}
+
+.chat-root header .logo {
+  width: 150px;
+  height: 50px;
+  object-fit: contain;
+}
+
+.chat-root header h2 {
+  margin: 0;
+  font-size: 22px;
+  font-weight: 600;
+  color: #ffffff;
+  letter-spacing: -0.3px;
+  flex: 1;
+  margin-left: 16px;
+}
+
+.chat-root header button {
+  padding: 10px 24px;
+  background: rgba(255, 255, 255, 0.15);
+  color: white;
+  border: 1.5px solid rgba(255, 255, 255, 0.3);
+  border-radius: 8px;
+  font-weight: 600;
+  font-size: 14px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  backdrop-filter: blur(10px);
+}
+
+.chat-root header button:hover {
+  background: rgba(255, 255, 255, 0.25);
+  border-color: rgba(255, 255, 255, 0.5);
+  transform: translateY(-1px);
+}
+
+.chat-root header button:active {
+  transform: translateY(0);
+}
+
+/* ============================================
+   MESSAGES CONTAINER
+   ============================================ */
+.messages {
+  flex: 1;
+  overflow-y: auto;
+  padding: 24px;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  background: white;
+  margin: 20px 32px;
+  border-radius: 12px;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.06), 0 1px 2px rgba(0, 0, 0, 0.04);
+  border: 1px solid #e5e7eb;
+}
+
+.messages::-webkit-scrollbar {
+  width: 8px;
+}
+
+.messages::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.messages::-webkit-scrollbar-thumb {
+  background: #cbd5e1;
+  border-radius: 10px;
+}
+
+.messages::-webkit-scrollbar-thumb:hover {
+  background: #94a3b8;
+}
+
+/* ============================================
+   CHAT INPUT SECTION
+   ============================================ */
+.chat-input-root {
+  display: flex;
+  align-items: flex-end;
+  gap: 12px;
+  padding: 16px 32px 24px;
+  background: transparent;
+}
+
+.chat-textfield {
+  flex: 1;
+}
+
+.chat-textfield .MuiInputBase-root {
+  min-height: 56px;
+  align-items: center;
+  background-color: white;
+  border-radius: 12px;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1), 0 1px 2px rgba(0, 0, 0, 0.06);
+  border: 1px solid #e5e7eb;
+  transition: all 0.2s ease;
+}
+
+.chat-textfield .MuiInputBase-root:hover {
+  border-color: #cbd5e1;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.chat-textfield .MuiInputBase-root.Mui-focused {
+  border-color: #1e40af;
+  box-shadow: 0 0 0 3px rgba(30, 64, 175, 0.1), 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.chat-textfield textarea {
+  line-height: 1.5;
+  font-size: 15px;
+  color: #1f2937;
+}
+
+.chat-textfield textarea::placeholder {
+  color: #9ca3af;
+}
+
+.chat-send-btn {
+  height: 56px;
+  min-width: 110px;
+  padding: 0 28px;
+  font-weight: 600;
+  text-transform: none;
+  font-size: 15px !important;
+  border-radius: 12px !important;
+  background: linear-gradient(135deg, #1e40af 0%, #1e3a8a 100%) !important;
+  box-shadow: 0 2px 8px rgba(30, 64, 175, 0.25) !important;
+  transition: all 0.2s ease !important;
+}
+
+.chat-send-btn:hover:not(:disabled) {
+  background: linear-gradient(135deg, #1e3a8a 0%, #172554 100%) !important;
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px rgba(30, 64, 175, 0.3) !important;
+}
+
+.chat-send-btn:active:not(:disabled) {
+  transform: translateY(0);
+}
+
+.chat-send-btn:disabled {
+  background: #e5e7eb !important;
+  color: #9ca3af !important;
+  box-shadow: none !important;
+  transform: none !important;
+}
+
+/* ============================================
+   MESSAGE BUBBLES
+   ============================================ */
+.message {
+  display: flex;
+  padding: 12px 16px;
+  border-radius: 12px;
+  margin: 0;
+  max-width: 70%;
+  word-wrap: break-word;
+  line-height: 1.5;
+  animation: fadeInUp 0.3s ease;
+}
+
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(8px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.message.user {
+  align-self: flex-end;
+  background: linear-gradient(135deg, #1e40af 0%, #1e3a8a 100%);
+  color: white;
+  font-size: 15px;
+  box-shadow: 0 2px 6px rgba(30, 64, 175, 0.2);
+  border-bottom-right-radius: 4px;
+}
+
+.message.bot {
+  white-space: pre-line;
+  align-self: flex-start;
+  background: #f9fafb;
+  font-size: 15px;
+  color: #1f2937;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.06);
+  border-bottom-left-radius: 4px;
+  border: 1px solid #e5e7eb;
+}
+
+/* ============================================
+   FILE CARD
+   ============================================ */
+.file-card {
+  background: #ffffff;
+  border: 1px solid #e5e7eb;
+  border-radius: 12px;
+  padding: 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  min-width: 300px;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.08);
+  transition: all 0.2s ease;
+}
+
+.file-card:hover {
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  transform: translateY(-2px);
+  border-color: #cbd5e1;
+}
+
+.file-info {
+  display: flex;
+  gap: 12px;
+  align-items: center;
+}
+
+.file-text {
+  font-weight: 600;
+  color: #1f2937;
+  font-size: 15px;
+}
+
+.file-name {
+  font-size: 13px;
+  color: #6b7280;
+  margin-top: 4px;
+}
+
+.download-btn {
+  align-self: flex-end;
+  text-transform: none !important;
+  border-radius: 8px !important;
+  font-weight: 600 !important;
+  border-color: #1e40af !important;
+  color: #1e40af !important;
+  padding: 6px 16px !important;
+  transition: all 0.2s ease !important;
+}
+
+.download-btn:hover {
+  background: #1e40af !important;
+  color: white !important;
+  border-color: #1e40af !important;
+}
+
+/* ============================================
+   LOADING STATE
+   ============================================ */
+.message.bot .MuiCircularProgress-root {
+  color: #1e40af;
+}
+
+/* ============================================
+   EMPTY STATE
+   ============================================ */
+.messages:empty::before {
+  content: "Start a conversation...";
+  color: #9ca3af;
+  font-size: 16px;
+  text-align: center;
+  padding: 40px;
+  display: block;
+}
+
+/* ============================================
+   RESPONSIVE DESIGN
+   ============================================ */
+@media (max-width: 768px) {
+  .chat-toolbar {
+    padding: 10px 20px !important;
+    min-height: 64px !important;
+  }
+
+  .chat-brand {
+    gap: 12px;
+  }
+
+  .chat-brand .MuiTypography-root {
+    font-size: 18px;
+  }
+
+  .logo {
+    width: 120px;
+    height: 40px;
+  }
+
+  .chat-toolbar .MuiButton-root {
+    padding: 8px 18px;
+    font-size: 13px;
+    min-width: auto;
+  }
+
+  /* Legacy header support */
+  .chat-root header {
+    padding: 14px 20px;
+  }
+
+  .chat-root header h2 {
+    font-size: 18px;
+  }
+
+  .messages {
+    margin: 12px 16px;
+    padding: 16px;
+  }
+
+  .chat-input-root {
+    padding: 12px 16px 16px;
+    gap: 8px;
+  }
+
+  .chat-textfield .MuiInputBase-root {
+    min-height: 52px;
+  }
+
+  .chat-textfield textarea {
+    font-size: 14px;
+  }
+
+  .chat-send-btn {
+    height: 52px;
+    min-width: 90px;
+    font-size: 14px !important;
+    padding: 0 20px;
+  }
+
+  .message {
+    max-width: 85%;
+    font-size: 14px;
+    padding: 10px 14px;
+  }
+
+  .file-card {
+    min-width: 260px;
+  }
+}
+
+/* ============================================
+   ACCESSIBILITY
+   ============================================ */
+button:focus-visible {
+  outline: 2px solid #1e40af;
+  outline-offset: 2px;
+}
+
+/* ============================================
+   SMOOTH TRANSITIONS
+   ============================================ */
+* {
+  transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+}
