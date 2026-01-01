@@ -1,9 +1,9 @@
-import { Box, AppBar, Toolbar, Typography, Button, Paper } from '@mui/material';
+import { Box, AppBar, Toolbar, Typography, Button } from '@mui/material';
 import RestartAltIcon from '@mui/icons-material/RestartAlt';
 import { useChatController } from '../hooks/useChatController';
 import MessageList from '../components/MessageList';
 import ChatInput from '../components/ChatInput';
-import logo from '../../assets/logo-personal.svg';
+import logo from '../../assets/us-bank.png';
 import '../css/AdvancedChatBot.scss';
 
 export default function AdvancedChatBot() {
@@ -33,15 +33,15 @@ export default function AdvancedChatBot() {
         </Toolbar>
       </AppBar>
 
-      {/* Chat Container */}
-      <Paper elevation={2} className="chat-container">
+      {/* Chat Container - Scrollable Message Area */}
+      <Box className="chat-messages-container">
         <MessageList responseText={responseText} />
-      </Paper>
+      </Box>
 
-      {/* Input */}
-      <Paper elevation={3} className="chat-input-wrapper">
+      {/* Footer - Fixed Input Area */}
+      <Box className="chat-footer">
         <ChatInput onSend={sendMessage} disabled={isPending} />
-      </Paper>
+      </Box>
     </Box>
   );
 }

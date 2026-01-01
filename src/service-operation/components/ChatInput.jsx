@@ -37,10 +37,9 @@ export default function ChatInput({ onSend, disabled }) {
         className="chat-send-btn"
         variant="contained"
         disabled={disabled}
-         endIcon={<SendIcon />}
+        endIcon={<SendIcon />}
         onClick={handleSend}
       >
-        Send
       </Button>
     </Box>
   );
