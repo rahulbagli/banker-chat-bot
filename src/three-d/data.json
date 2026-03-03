@@ -1,0 +1,46 @@
+{
+  "traceId": "abc-123-xyz",
+  "workflow": [
+    {
+      "step": 0,
+      "from": "gateway",
+      "to": "auth",
+      "label": "Authenticating",
+      "request": { "headers": "Bearer xxxx", "path": "/api/v1/login" },
+      "response": { "status": "processing" }
+    },
+    {
+      "step": 1,
+      "from": "auth",
+      "to": "authDb",
+      "label": "DB Lookup",
+      "request": { "query": "SELECT * FROM users WHERE id=1" },
+      "response": { "db_time": "12ms", "found": true }
+    },
+    {
+      "step": 2,
+      "from": "authDb",
+      "to": "auth",
+      "label": "Data Returned",
+      "request": null,
+      "response": { "user": "admin", "role": "editor" }
+    },
+    {
+      "step": 3,
+      "from": "auth",
+      "to": "gateway",
+      "label": "Access Granted",
+      "isError": false,
+      "request": null,
+      "response": { "token": "JWT_HEADER_TOKEN", "expires": "1h" }
+    },
+    {
+      "step": 4,
+      "from": "gateway",
+      "to": "order",
+      "label": "Create Order",
+      "request": { "item": "Laptop", "qty": 1 },
+      "response": { "orderStatus": "validating" }
+    }
+  ]
+}
