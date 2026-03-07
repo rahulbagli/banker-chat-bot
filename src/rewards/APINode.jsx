@@ -8,7 +8,7 @@ function APINode({ position, isActive, label, color }) {
     <group position={position}>
       {/* ===== Central Cube ===== */}
       <mesh ref={pulseRef} castShadow receiveShadow>
-        <boxGeometry args={[1.4, 1.4, 1.4]} />
+        <boxGeometry args={[2.5,2.5,2.5]} />
         <meshPhysicalMaterial
           color={color || "#ec4899"}
           metalness={0.8}
@@ -23,8 +23,8 @@ function APINode({ position, isActive, label, color }) {
 
       {/* ===== Label ===== */}
       <Text
-        position={[0, 0.8, 0]}
-        rotation={[4.8, 0, 0]}
+        position={[0, 1.3, 0]}
+        rotation={[4.7, 0, 0]}
         fontSize={0.4}
         color="white"
         anchorX="center"

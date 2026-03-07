@@ -4,20 +4,20 @@
     "description": "Microservice workflow with decision points and parallel execution",
     
     "nodes": [
-      { "id": 0, "name": "User Node", "type": "Client", "position": [33, 0.7, -10], "color": "#1a90e2", "label": "User" },
-      { "id": 1, "name": "Microservice Node", "type": "microservice", "position": [33, 0.7, 0], "color": "#ad2799", "label": "Rewards\nSummary" },
-      { "id": 2, "name": "Node", "type": "database", "position": [25, 1.4, 0], "color": "#4acce2", "label": "XERF" },
-      { "id": 3, "name": "Condition Check", "type": "condition", "position": [18, 0.5, 0], "color": "#1e40af", "label": "Check \nClientBU\npresent?" },
-      { "id": 4, "name": "Z/OS Eligibility Call", "type": "zos", "position": [18, 1.8, 10], "color": "#cdcd17", "label": "Z/OS\nEligibility" },
-      { "id": 5, "name": "Condition Check", "type": "condition", "position": [12, 0.5, 0], "color": "#1e40af", "label": "Check \nClientBU\nFor Fidelity?" },
-      { "id": 6, "name": "Z/OS - SOR", "type": "zos", "position": [12, 1.8, -11], "color": "#ff0000", "label": "Z/OS\nSOR" },
-      { "id": 7, "name": "Validate SOR Response", "type": "condition", "position": [5, 0.5, 0], "color": "#1e40af", "label": "Validate\nSOR\nResponse" },
-      { "id": 8, "name": "Epsilon Profile Call", "type": "backend", "position": [-10, 0.5, -5], "color": "#e25252", "label": "Epsilon\nProfile Call" },
-      { "id": 9, "name": "Balance Service", "type": "api", "position": [3, 1, -11], "color": "#bd10e0", "label": "Balance\nService" },
-      { "id": 10, "name": "Redemption Service", "type": "api", "position": [-1, 1, -11], "color": "#bd10e0", "label": "Redemption\nService" },
-      { "id": 11, "name": "Expiration Service", "type": "api", "position": [-5, 1, -11], "color": "#bd10e0", "label": "Expiration\nService" },
-      { "id": 12, "name": "Rewards Summary Z/OS", "type": "zos", "position": [-1, 1.8, 5], "color": "#bd10e0", "label": "Z/OS\nICS" },
-      { "id": 13, "name": "Final Response", "type": "backend", "position": [-14, 0.5, 5], "color": "#36ce36", "label": "Final\nResponse" }
+      { "id": 0, "name": "User Node", "type": "Client", "position": [23, 0.7, -10], "color": "#1a90e2", "label": "User" },
+      { "id": 1, "name": "Microservice Node", "type": "microservice", "position": [23, 0.7, 0], "color": "#ad2799", "label": "Rewards\nSummary" },
+      { "id": 2, "name": "Node", "type": "database", "position": [15, 1.4, 0], "color": "#4acce2", "label": "XERF" },
+      { "id": 3, "name": "Condition Check", "type": "condition", "position": [8, 0.5, 0], "color": "#1e40af", "label": "Check \nClientBU\npresent?" },
+      { "id": 4, "name": "Z/OS Eligibility Call", "type": "zos", "position": [8, 1.8, 10], "color": "#cdcd17", "label": "Z/OS\nEligibility" },
+      { "id": 5, "name": "Condition Check", "type": "condition", "position": [2, 0.5, 0], "color": "#1e40af", "label": "Check \nClientBU\nFor Fidelity?" },
+      { "id": 6, "name": "Z/OS - SOR", "type": "zos", "position": [2, 1.8, -11], "color": "#ff0000", "label": "Z/OS\nSOR" },
+      { "id": 7, "name": "Validate SOR Response", "type": "condition", "position": [-5, 0.5, 0], "color": "#1e40af", "label": "Validate\nSOR\nResponse" },
+      { "id": 8, "name": "Epsilon Profile Call", "type": "backend", "position": [-20, 0.5, -5], "color": "#e25252", "label": "Epsilon\nProfile Call" },
+      { "id": 9, "name": "Balance Service", "type": "api", "position": [-15, 1, -11], "color": "#bd10e0", "label": "Balance\nService" },
+      { "id": 10, "name": "Redemption Service", "type": "api", "position": [-11, 1, -11], "color": "#bd10e0", "label": "Redemption\nService" },
+      { "id": 11, "name": "Expiration Service", "type": "api", "position": [-7, 1, -11], "color": "#bd10e0", "label": "Expiration\nService" },
+      { "id": 12, "name": "Rewards Summary Z/OS", "type": "zos", "position": [-11, 1.8, 5], "color": "#bd10e0", "label": "Z/OS\nICS" },
+      { "id": 13, "name": "Final Response", "type": "backend", "position": [-24, 0.5, 5], "color": "#36ce36", "label": "Final\nResponse" }
     ],
     
     "connections": [
@@ -59,12 +59,12 @@
     
     "settings": {
       "camera": { "position": [10, 25, 30], "fov": 45 },
-      "base": { "size": [55, 30], "color": "#f2d357", "position": [10, 0, 0] },
+      "base": { "size": [55, 30], "color": "#f2d357", "position": [0, 0, 0] },
       "boundaries": [
-        { "min": [-6.5, 0, -13], "max": [4.5, 0, -9], "label": "External System" },
-        { "min": [-3, 0, 3], "max": [1, 0, 7], "label": "Z/OS Mainframe" },
-        { "min": [10.2, 0, -13], "max": [13.7, 0, -9], "label": "SOR Layer" },
-        { "min": [16, 0, 8], "max": [20, 0, 12], "label": "Eligibility Layer" }
+        { "min": [-16.5, 0, -13], "max": [-4.5, 0, -9], "label": "Epsilon System" },
+        { "min": [-13, 0, 3], "max": [-9, 0, 7], "label": "Z/OS Mainframe" },
+        { "min": [0, 0, -13], "max": [4, 0, -9], "label": "SOR Layer" },
+        { "min": [6, 0, 8], "max": [10, 0, 12], "label": "Eligibility Layer" }
       ]
     }
   }

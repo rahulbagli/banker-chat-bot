@@ -17,7 +17,7 @@ const NODE_COMPONENTS = {
   api: APINode,
   zos: ZOSNode,
   backend: BackendCallNode,
-  Client: BackendCallNode, // Client type uses BackendCallNode
+  Client: BackendCallNode,
 };
 
 function WorkFlowExecution({ targetIndex, flowMap, activeRequests, traversedNodes, config }) {
@@ -33,7 +33,9 @@ function WorkFlowExecution({ targetIndex, flowMap, activeRequests, traversedNode
   );
 
   const renderNode = (node) => {
-    const isActive = targetIndex === node.id;
+    // FIXED: Node is active if ANY active request is at this position
+    const isActive = activeRequests?.some(req => req.position === node.id);
+    
     const NodeComponent = NODE_COMPONENTS[node.type];
 
     if (!NodeComponent) {
@@ -54,7 +56,6 @@ function WorkFlowExecution({ targetIndex, flowMap, activeRequests, traversedNode
       isActive: isActive,
     };
 
-    // ALL node types should receive label and color
     const typeSpecificProps = {
       label: node.label || node.name,
       color: node.color
