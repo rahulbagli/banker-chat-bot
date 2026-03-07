@@ -1,13 +1,13 @@
 import { Edges, Text } from "@react-three/drei";
 
-function ZOSNode({ position, isActive, label }) {
+function ZOSNode({ position, isActive, label, color }) {
   return (
     <group position={position}>
       {/* ===== Main Rack Body (Further Reduced Height) ===== */}
       <mesh castShadow receiveShadow>
         <boxGeometry args={[2.1, 3, 2]} /> {/* Height ~3 */}
         <meshPhysicalMaterial
-          color="#1e293b"
+          color={color || "#1e293b"}
           metalness={0.9}
           roughness={0.35}
           clearcoat={0.5}

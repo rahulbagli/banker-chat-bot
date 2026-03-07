@@ -17,6 +17,7 @@ const NODE_COMPONENTS = {
   api: APINode,
   zos: ZOSNode,
   backend: BackendCallNode,
+  Client: BackendCallNode, // Client type uses BackendCallNode
 };
 
 function WorkFlowExecution({ targetIndex, flowMap, activeRequests, traversedNodes, config }) {
@@ -53,12 +54,11 @@ function WorkFlowExecution({ targetIndex, flowMap, activeRequests, traversedNode
       isActive: isActive,
     };
 
-    const typeSpecificProps = {};
-    
-    if (node.type === "backend" || node.type === "zos") {
-      typeSpecificProps.color = node.color;
-      typeSpecificProps.label = node.label || node.name;
-    }
+    // ALL node types should receive label and color
+    const typeSpecificProps = {
+      label: node.label || node.name,
+      color: node.color
+    };
 
     return <NodeComponent {...commonProps} {...typeSpecificProps} />;
   };
@@ -87,7 +87,6 @@ function WorkFlowExecution({ targetIndex, flowMap, activeRequests, traversedNode
           req.fromPosition === conn.from && req.position === conn.to
         );
         const isTraversed = traversedNodes?.includes(conn.from) && traversedNodes?.includes(conn.to);
-        const isParallelConnection = conn.type === "parallel" || conn.type === "convergence";
 
         return (
           <ConnectionArrow
@@ -96,8 +95,7 @@ function WorkFlowExecution({ targetIndex, flowMap, activeRequests, traversedNode
             end={waypoints[conn.to]}
             isActive={isCurrentlyActive}
             isTraversed={isTraversed && !isCurrentlyActive}
-            isParallel={isParallelConnection}
-            activeRequests={activeRequests}
+            connectionIndex={index % 3}
           />
         );
       })}
