@@ -166,7 +166,9 @@ export default function WorkFlowSimulator() {
 
     const fromNode = targetIndex;
 
+    // PARALLEL SPLIT - Create multiple balls
     if (currentNode.type === "parallel" && currentNode.next.length > 1) {
+      console.log("🔀 PARALLEL SPLIT from", targetIndex, "to", currentNode.next);
       const nextPositions = currentNode.next;
       setTargetIndex(nextPositions[0]);
       
@@ -185,8 +187,52 @@ export default function WorkFlowSimulator() {
       return;
     }
 
+    // MULTIPLE ACTIVE REQUESTS - Handle parallel execution or convergence
+    if (activeRequests.length > 1) {
+      console.log("⚡ Multiple requests active:", activeRequests.length);
+      
+      // Move all balls to their next positions
+      const nextRequests = activeRequests.map((req, idx) => {
+        const reqNode = flowMap[req.position];
+        const nextPos = reqNode?.next?.[0];
+        console.log(`  Ball ${idx}: position ${req.position} → next: ${nextPos}`);
+        
+        return nextPos !== undefined && nextPos !== null ? {
+          id: `parallel-move-${idx}-${Date.now()}`,
+          position: nextPos,
+          fromPosition: req.position
+        } : null;
+      }).filter(Boolean);
+
+      console.log("📦 Next requests:", nextRequests);
+
+      if (nextRequests.length > 0) {
+        // Check if all balls are converging to the same position
+        const allPositions = nextRequests.map(r => r.position);
+        const uniquePositions = [...new Set(allPositions)];
+        
+        if (uniquePositions.length === 1) {
+          console.log("🔗 CONVERGENCE: All balls moving to", uniquePositions[0]);
+        }
+
+        setTargetIndex(nextRequests[0].position);
+        setActiveRequests(nextRequests);
+        
+        const newNodes = nextRequests.map(r => r.position).filter(n => !traversedNodes.includes(n));
+        setTraversedNodes((prev) => [...prev, ...newNodes]);
+
+        const newHistory = navigationHistory.slice(0, historyIndex + 1);
+        newHistory.push({ nodeId: nextRequests[0].position, activeRequests: nextRequests });
+        setNavigationHistory(newHistory);
+        setHistoryIndex(newHistory.length - 1);
+      }
+      return;
+    }
+
+    // SINGLE REQUEST - Normal sequential flow
     const nextNode = getNextNodeForPosition(targetIndex);
     if (nextNode !== null) {
+      console.log("➡️ Sequential move:", targetIndex, "→", nextNode);
       setTargetIndex(nextNode);
       const newRequests = [{
         id: `move-${fromNode}-${nextNode}-${Date.now()}`,
@@ -212,23 +258,36 @@ export default function WorkFlowSimulator() {
       const previousState = navigationHistory[newIndex];
       const currentRequests = activeRequests;
 
+      console.log("⬅️ PREVIOUS - Current requests:", currentRequests);
+      console.log("⬅️ PREVIOUS - Going to index:", newIndex, "Previous state:", previousState);
+
+      // Create reverse animation requests (all balls move to previous node)
       const reverseRequests = currentRequests.map((req, idx) => ({
         id: `reverse-${idx}-${Date.now()}`,
         position: previousState.nodeId,
         fromPosition: req.position
       }));
 
+      console.log("🔄 Reverse animation requests:", reverseRequests);
+
       setTargetIndex(previousState.nodeId);
       setActiveRequests(reverseRequests);
       setHistoryIndex(newIndex);
       setShowDecision(false);
 
+      // After animation completes, restore the exact state from history
       setTimeout(() => {
-        setActiveRequests([{
-          id: `static-${Date.now()}`,
-          position: previousState.nodeId,
-          fromPosition: previousState.nodeId
-        }]);
+        console.log("✅ Restoring state from history:", previousState.activeRequests);
+        
+        // Create fresh static requests matching the positions in history
+        const restoredRequests = previousState.activeRequests.map((req, idx) => ({
+          id: `restored-${idx}-${Date.now()}`,
+          position: req.position,
+          fromPosition: req.position  // Static - no animation
+        }));
+        
+        console.log("📦 Restored requests:", restoredRequests);
+        setActiveRequests(restoredRequests);
       }, 1000);
     }
   };
@@ -348,56 +407,68 @@ export default function WorkFlowSimulator() {
           </div>
         )}
 
-        {/* Payload Display */}
-        {activeRequests.length > 1 ? (
-          <>
-            {activeRequests.map((req, idx) => {
-              const parallelNodeData = config.nodes.find(n => n.id === req.position);
-              const parallelPayload = nodePayloads[req.position];
+        {/* Payload Display - Show payloads for unique positions only */}
+        {(() => {
+          // Get unique positions from active requests
+          const uniquePositions = [...new Set(activeRequests.map(req => req.position))];
+          
+          // If multiple balls at DIFFERENT positions (true parallel execution)
+          if (activeRequests.length > 1 && uniquePositions.length > 1) {
+            return (
+              <>
+                {uniquePositions.map((position) => {
+                  const nodeData = config.nodes.find(n => n.id === position);
+                  const payload = nodePayloads[position];
+                  
+                  return (
+                    <div key={`payload-${position}`}>
+                      {payload?.request && (
+                        <PayloadDisplay 
+                          nodeId={position}
+                          nodeName={nodeData?.label?.replace(/\\n/g, " ") || nodeData?.name}
+                          payload={payload.request}
+                          type="request"
+                        />
+                      )}
+                      {payload?.response && (
+                        <PayloadDisplay 
+                          nodeId={position}
+                          nodeName={nodeData?.label?.replace(/\\n/g, " ") || nodeData?.name}
+                          payload={payload.response}
+                          type="response"
+                        />
+                      )}
+                    </div>
+                  );
+                })}
+              </>
+            );
+          }
+          
+          // If single ball OR multiple balls at SAME position (convergence)
+          // Show payload only once for the target node
+          return (
+            <>
+              {currentPayload?.request && (
+                <PayloadDisplay 
+                  nodeId={targetIndex}
+                  nodeName={nodeData?.label?.replace(/\\n/g, " ") || nodeData?.name}
+                  payload={currentPayload.request}
+                  type="request"
+                />
+              )}
               
-              return (
-                <div key={`parallel-${req.position}-${idx}`}>
-                  {parallelPayload?.request && (
-                    <PayloadDisplay 
-                      nodeId={req.position}
-                      nodeName={parallelNodeData?.label?.replace(/\\n/g, " ") || parallelNodeData?.name}
-                      payload={parallelPayload.request}
-                      type="request"
-                    />
-                  )}
-                  {parallelPayload?.response && (
-                    <PayloadDisplay 
-                      nodeId={req.position}
-                      nodeName={parallelNodeData?.label?.replace(/\\n/g, " ") || parallelNodeData?.name}
-                      payload={parallelPayload.response}
-                      type="response"
-                    />
-                  )}
-                </div>
-              );
-            })}
-          </>
-        ) : (
-          <>
-            {currentPayload?.request && (
-              <PayloadDisplay 
-                nodeId={targetIndex}
-                nodeName={nodeData?.label?.replace(/\\n/g, " ") || nodeData?.name}
-                payload={currentPayload.request}
-                type="request"
-              />
-            )}
-            
-            {currentPayload?.response && (
-              <PayloadDisplay 
-                nodeId={targetIndex}
-                nodeName={nodeData?.label?.replace(/\\n/g, " ") || nodeData?.name}
-                payload={currentPayload.response}
-                type="response"
-              />
-            )}
-          </>
-        )}
+              {currentPayload?.response && (
+                <PayloadDisplay 
+                  nodeId={targetIndex}
+                  nodeName={nodeData?.label?.replace(/\\n/g, " ") || nodeData?.name}
+                  payload={currentPayload.response}
+                  type="response"
+                />
+              )}
+            </>
+          );
+        })()}
       </div>
 
       <Canvas shadows camera={{ position: config.settings.camera.position, fov: config.settings.camera.fov }}>
