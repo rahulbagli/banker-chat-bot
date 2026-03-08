@@ -1,0 +1,408 @@
+{
+  "requests": {
+    "GET /user": {
+      "method": "GET",
+      "endpoint": "/api/v1/user",
+      "headers": {
+        "Content-Type": "application/json",
+        "Authorization": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...",
+        "X-Request-ID": "req-12345-67890",
+        "X-Client-Version": "1.0.0"
+      },
+      "queryParams": {
+        "userId": "USR-98765",
+        "includePreferences": true
+      },
+      "body": null
+    },
+    "GET /XREF": {
+      "method": "GET",
+      "endpoint": "/api/v1/xref/lookup",
+      "headers": {
+        "Content-Type": "application/json",
+        "Authorization": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...",
+        "X-Request-ID": "req-xref-34567",
+        "X-System": "rewards-platform"
+      },
+      "queryParams": {
+        "clientBU": "FIDELITY",
+        "accountId": "ACC-12345"
+      },
+      "body": null
+    },
+    "POST /eligibility": {
+      "method": "POST",
+      "endpoint": "/zos/eligibility/check",
+      "headers": {
+        "Content-Type": "application/json",
+        "Authorization": "Bearer zos-token-abc123",
+        "X-Request-ID": "req-elig-78901",
+        "X-Mainframe-System": "ZOS-PROD"
+      },
+      "body": {
+        "clientBU": "FIDELITY",
+        "accountNumber": "ACC-12345",
+        "productType": "REWARDS",
+        "checkDate": "2026-03-08"
+      }
+    },
+    "POST /balance": {
+      "method": "POST",
+      "endpoint": "/api/v1/balance/query",
+      "headers": {
+        "Content-Type": "application/json",
+        "Authorization": "Bearer epsilon-balance-token",
+        "X-Request-ID": "req-bal-45678",
+        "X-Service": "balance-service"
+      },
+      "body": {
+        "accountId": "ACC-12345",
+        "userId": "USR-98765",
+        "currency": "USD",
+        "asOfDate": "2026-03-08"
+      }
+    },
+    "POST /redemption": {
+      "method": "POST",
+      "endpoint": "/api/v1/redemption/history",
+      "headers": {
+        "Content-Type": "application/json",
+        "Authorization": "Bearer epsilon-redemption-token",
+        "X-Request-ID": "req-red-56789"
+      },
+      "body": {
+        "accountId": "ACC-12345",
+        "startDate": "2025-01-01",
+        "endDate": "2026-03-08",
+        "limit": 100
+      }
+    },
+    "POST /expiration": {
+      "method": "POST",
+      "endpoint": "/api/v1/expiration/check",
+      "headers": {
+        "Content-Type": "application/json",
+        "Authorization": "Bearer epsilon-exp-token",
+        "X-Request-ID": "req-exp-67890"
+      },
+      "body": {
+        "accountId": "ACC-12345",
+        "lookAheadDays": 90
+      }
+    },
+    "POST /sor": {
+      "method": "POST",
+      "endpoint": "/zos/sor/validate",
+      "headers": {
+        "Content-Type": "application/json",
+        "Authorization": "Bearer zos-sor-token",
+        "X-Request-ID": "req-sor-23456",
+        "X-System": "SOR-MAINFRAME"
+      },
+      "body": {
+        "clientBU": "FIDELITY",
+        "validationType": "FULL",
+        "accountId": "ACC-12345"
+      }
+    },
+    "POST /epsilon/profile": {
+      "method": "POST",
+      "endpoint": "/api/v1/epsilon/profile",
+      "headers": {
+        "Content-Type": "application/json",
+        "Authorization": "Bearer epsilon-profile-token",
+        "X-Request-ID": "req-eps-34567",
+        "X-Epsilon-System": "PROFILE-API"
+      },
+      "body": {
+        "userId": "USR-98765",
+        "accountId": "ACC-12345",
+        "fetchPreferences": true,
+        "includeHistory": true
+      }
+    },
+    "POST /ics": {
+      "method": "POST",
+      "endpoint": "/zos/ics/summary",
+      "headers": {
+        "Content-Type": "application/json",
+        "Authorization": "Bearer zos-ics-token",
+        "X-Request-ID": "req-ics-45678",
+        "X-Mainframe-System": "ICS-ZOS"
+      },
+      "body": {
+        "accountId": "ACC-12345",
+        "summaryType": "COMPLETE",
+        "includeTransactions": true
+      }
+    }
+  },
+  "responses": {
+    "user": {
+      "status": 200,
+      "statusText": "OK",
+      "headers": {
+        "Content-Type": "application/json",
+        "X-Response-Time": "45ms",
+        "X-Request-ID": "req-12345-67890"
+      },
+      "body": {
+        "userId": "USR-98765",
+        "userName": "john.doe@example.com",
+        "firstName": "John",
+        "lastName": "Doe",
+        "accountStatus": "ACTIVE",
+        "memberSince": "2020-05-15",
+        "preferences": {
+          "language": "en-US",
+          "notifications": true,
+          "emailOptIn": true
+        }
+      }
+    },
+    "XREF": {
+      "status": 200,
+      "statusText": "OK",
+      "headers": {
+        "Content-Type": "application/json",
+        "X-Response-Time": "120ms",
+        "X-Request-ID": "req-xref-34567",
+        "X-Cache-Hit": "false"
+      },
+      "body": {
+        "clientBU": "FIDELITY",
+        "accountId": "ACC-12345",
+        "crossReferences": [
+          {
+            "system": "REWARDS",
+            "externalId": "RWD-ABC-123",
+            "status": "ACTIVE"
+          },
+          {
+            "system": "LOYALTY",
+            "externalId": "LOY-XYZ-789",
+            "status": "ACTIVE"
+          }
+        ],
+        "lastUpdated": "2026-03-08T10:30:00Z"
+      }
+    },
+    "eligibility": {
+      "status": 200,
+      "statusText": "OK",
+      "headers": {
+        "Content-Type": "application/json",
+        "X-Response-Time": "350ms",
+        "X-Request-ID": "req-elig-78901",
+        "X-Mainframe-Transaction-ID": "TXN-ZOS-12345"
+      },
+      "body": {
+        "eligible": true,
+        "clientBU": "FIDELITY",
+        "accountNumber": "ACC-12345",
+        "productEligibility": {
+          "REWARDS": true,
+          "CASHBACK": true,
+          "TRAVEL": false
+        },
+        "restrictions": [],
+        "effectiveDate": "2026-03-08",
+        "expiryDate": "2027-03-08"
+      }
+    },
+    "balance": {
+      "status": 200,
+      "statusText": "OK",
+      "headers": {
+        "Content-Type": "application/json",
+        "X-Response-Time": "180ms",
+        "X-Request-ID": "req-bal-45678"
+      },
+      "body": {
+        "accountId": "ACC-12345",
+        "currentBalance": 125000,
+        "availableBalance": 120000,
+        "pendingBalance": 5000,
+        "currency": "POINTS",
+        "lastUpdated": "2026-03-08T14:25:00Z",
+        "breakdown": {
+          "earned": 125000,
+          "redeemed": 0,
+          "expired": 0
+        }
+      }
+    },
+    "redemption": {
+      "status": 200,
+      "statusText": "OK",
+      "headers": {
+        "Content-Type": "application/json",
+        "X-Response-Time": "220ms",
+        "X-Request-ID": "req-red-56789"
+      },
+      "body": {
+        "accountId": "ACC-12345",
+        "totalRedemptions": 3,
+        "redemptions": [
+          {
+            "redemptionId": "RED-001",
+            "date": "2026-02-15",
+            "points": 5000,
+            "type": "TRAVEL",
+            "description": "Flight booking discount"
+          },
+          {
+            "redemptionId": "RED-002",
+            "date": "2026-01-20",
+            "points": 2500,
+            "type": "MERCHANDISE",
+            "description": "Gift card"
+          },
+          {
+            "redemptionId": "RED-003",
+            "date": "2025-12-10",
+            "points": 1000,
+            "type": "CASHBACK",
+            "description": "Statement credit"
+          }
+        ]
+      }
+    },
+    "expiration": {
+      "status": 200,
+      "statusText": "OK",
+      "headers": {
+        "Content-Type": "application/json",
+        "X-Response-Time": "95ms",
+        "X-Request-ID": "req-exp-67890"
+      },
+      "body": {
+        "accountId": "ACC-12345",
+        "upcomingExpirations": [
+          {
+            "expirationDate": "2026-04-30",
+            "points": 5000,
+            "daysUntilExpiration": 53
+          },
+          {
+            "expirationDate": "2026-05-31",
+            "points": 3000,
+            "daysUntilExpiration": 84
+          }
+        ],
+        "totalExpiringPoints": 8000,
+        "totalExpiringWithin90Days": 8000
+      }
+    },
+    "sor": {
+      "status": 200,
+      "statusText": "OK",
+      "headers": {
+        "Content-Type": "application/json",
+        "X-Response-Time": "420ms",
+        "X-Request-ID": "req-sor-23456",
+        "X-Mainframe-Transaction-ID": "TXN-SOR-67890"
+      },
+      "body": {
+        "validationResult": "SUCCESS",
+        "clientBU": "FIDELITY",
+        "accountId": "ACC-12345",
+        "accountStatus": "ACTIVE",
+        "validationDetails": {
+          "identityVerified": true,
+          "accountInGoodStanding": true,
+          "noFraudFlags": true
+        },
+        "timestamp": "2026-03-08T14:30:00Z"
+      }
+    },
+    "epsilon": {
+      "status": 200,
+      "statusText": "OK",
+      "headers": {
+        "Content-Type": "application/json",
+        "X-Response-Time": "280ms",
+        "X-Request-ID": "req-eps-34567"
+      },
+      "body": {
+        "userId": "USR-98765",
+        "accountId": "ACC-12345",
+        "profile": {
+          "segmentation": "PREMIUM",
+          "lifetimeValue": "HIGH",
+          "engagementScore": 8.5,
+          "preferredCategories": ["TRAVEL", "DINING", "RETAIL"]
+        },
+        "history": {
+          "totalTransactions": 245,
+          "avgMonthlyActivity": 12,
+          "lastActivity": "2026-03-07"
+        }
+      }
+    },
+    "ics": {
+      "status": 200,
+      "statusText": "OK",
+      "headers": {
+        "Content-Type": "application/json",
+        "X-Response-Time": "550ms",
+        "X-Request-ID": "req-ics-45678",
+        "X-Mainframe-Transaction-ID": "TXN-ICS-34567"
+      },
+      "body": {
+        "accountId": "ACC-12345",
+        "summary": {
+          "totalPoints": 125000,
+          "tierStatus": "PLATINUM",
+          "yearToDateEarnings": 45000,
+          "lifetimeEarnings": 450000
+        },
+        "recentTransactions": [
+          {
+            "date": "2026-03-07",
+            "points": 500,
+            "type": "PURCHASE",
+            "merchant": "ACME Corp"
+          },
+          {
+            "date": "2026-03-05",
+            "points": 1000,
+            "type": "BONUS",
+            "description": "Monthly bonus"
+          }
+        ]
+      }
+    },
+    "final": {
+      "status": 200,
+      "statusText": "OK",
+      "headers": {
+        "Content-Type": "application/json",
+        "X-Response-Time": "850ms",
+        "X-Request-ID": "req-final-99999",
+        "X-Total-Processing-Time": "3.2s"
+      },
+      "body": {
+        "userId": "USR-98765",
+        "accountId": "ACC-12345",
+        "rewardsSummary": {
+          "currentBalance": 125000,
+          "availableBalance": 120000,
+          "pendingBalance": 5000,
+          "expiringIn90Days": 8000,
+          "tierStatus": "PLATINUM",
+          "lifetimeEarnings": 450000
+        },
+        "eligibility": {
+          "rewardsProgram": true,
+          "premiumBenefits": true
+        },
+        "recommendations": [
+          "Redeem 5000 points expiring on 2026-04-30",
+          "Earn bonus points by shopping in preferred categories"
+        ],
+        "generatedAt": "2026-03-08T14:35:00Z"
+      }
+    }
+  }
+}
